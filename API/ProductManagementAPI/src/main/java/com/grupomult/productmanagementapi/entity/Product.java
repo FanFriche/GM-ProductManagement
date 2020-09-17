@@ -25,6 +25,9 @@ public class Product {
 	
 	private Date updateDate;
 	
+	public Product() {
+		
+	}
 	public Product(int id, String name, String category, Double value, Date createDate) {
 		this.id = id;
 		this.name = name;

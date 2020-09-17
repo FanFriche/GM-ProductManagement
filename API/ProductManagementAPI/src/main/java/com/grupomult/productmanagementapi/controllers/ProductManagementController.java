@@ -27,7 +27,7 @@ public class ProductManagementController {
 
 	@PostMapping("/product")
 	public String createProduct(@Valid @RequestBody ProductDTO productDto, BindingResult result) {
-		if(result.hasErrors()) {
+		if(!result.hasErrors()) {
 			productService.create(productDto);
 			return "Produto criado";						
 		}
@@ -41,12 +41,21 @@ public class ProductManagementController {
 	}
 	
 	@PutMapping("/product/{id}")
-	public String updateProduct(@PathVariable(value = "id") Long userId) {
-		return "Atualizando ".concat(String.valueOf(userId));
+	public String updateProduct(@PathVariable(value = "id") Integer userId, @Valid @RequestBody ProductDTO productDto, BindingResult result) {
+		if(!result.hasErrors()) {
+			productService.update(userId, productDto);
+			return "Sucesso ao atualizar";
+		}
+		
+		return "Erro ao atualizar";
 	}
 	
 	@DeleteMapping("/product/{id}")
-	public String deleteProduct(@PathVariable(value = "id") Long userId) {
-		return "Deletando ".concat(String.valueOf(userId));
+	public String deleteProduct(@PathVariable(value = "id") Integer userId) {
+		
+		if(productService.delete(userId)) {
+			return "Deleção feita";
+		}
+		return "Erro ao deletar";
 	}
 }

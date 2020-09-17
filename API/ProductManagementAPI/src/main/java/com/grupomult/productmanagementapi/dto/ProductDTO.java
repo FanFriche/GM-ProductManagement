@@ -24,6 +24,10 @@ public class ProductDTO {
 	
 	private Date updateDate;
 	
+	public ProductDTO() {
+		
+	}
+	
 	public ProductDTO(int id, String name, String category, Double value, Date createDate){
 		this.id = id;
 		this.name = name;

@@ -36,17 +36,18 @@ public class ProductService {
 		return productsDtoList;
 	}
 	
-	public ProductDTO update(ProductDTO productDto) {
-		Product product = new Product(productDto.getId(), productDto.getName(), productDto.getCategory(), productDto.getValue(), productDto.getCreateDate());
+	public ProductDTO update(Integer userId, ProductDTO productDto) {
+		Product product = new Product(userId, productDto.getName(), productDto.getCategory(), productDto.getValue(), productDto.getCreateDate());
 		products.save(product);
 		
 		return productDto;
 	}
 	
-	public ProductDTO delete(ProductDTO productDto) {
-		Product product = new Product(productDto.getId(), productDto.getName(), productDto.getCategory(), productDto.getValue(), productDto.getCreateDate());
-		products.save(product);
+	public Boolean delete(Integer userId) {
+		Product product = new Product();
+		product.setId(userId);
+		products.delete(product);
 		
-		return productDto;
+		return Boolean.TRUE;
 	}
 }
