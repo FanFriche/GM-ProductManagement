@@ -1,3 +1,3 @@
-insert into PRODUCT(ID, NAME, CATEGORY, VALUE, CREATE_DATE) VALUES(1, 'BodeBrown IPA', 'Perec�vel', 15.90, CURRENT_TIMESTAMP());
-insert into PRODUCT(ID, NAME, CATEGORY, VALUE, CREATE_DATE) VALUES(2, 'Belorizontina', 'Perec�vel', 8.90, CURRENT_TIMESTAMP());
-insert into PRODUCT(ID, NAME, CATEGORY, VALUE, CREATE_DATE) VALUES(3, 'Mal Pale Ale', 'Perec�vel', 12.50, CURRENT_TIMESTAMP());
+insert into PRODUCT(ID, NAME, CATEGORY, VALUE) VALUES(1, 'BodeBrown IPA', 'perecivel', 15.90);
+insert into PRODUCT(ID, NAME, CATEGORY, VALUE) VALUES(2, 'Belorizontina', 'nao_perecivel', 8.90);
+insert into PRODUCT(ID, NAME, CATEGORY, VALUE) VALUES(3, 'Mal Pale Ale', 'perecivel', 12.50);

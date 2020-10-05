@@ -1,0 +1,11 @@
+.menuToolbar{
+    height: 40px;
+}
+
+.toolbarItem i {
+    vertical-align: middle;
+}
+
+.toolbarItem button {
+    padding-left: 2px;
+}

@@ -1,0 +1,25 @@
+<mat-card class="matCardReadUpdate">
+    <mat-card-title>Criar Produto</mat-card-title>
+    <form>
+        <mat-form-field floatLabel="always">
+            <input matInput placeholder="Nome" [(ngModel)]="product.name" [formControl]="nameControl" required>
+            <mat-error *ngIf="nameControl.invalid">{{getErrorMessage()}}</mat-error>
+        </mat-form-field>
+        <mat-form-field floatLabel="always">
+            <input matInput placeholder="Preço" [(ngModel)]="product.value" [formControl]="valueControl" required>
+            <!--span matPrefix>R$</span-->
+            <mat-error *ngIf="valueControl.invalid">{{getErrorMessage()}}</mat-error>
+        </mat-form-field>
+        <mat-label class="radioLabel">Categoria*</mat-label>
+        <mat-radio-group [(ngModel)]="product.category" [ngModelOptions]="{standalone: true}" required >
+            <mat-radio-button value="perecivel" required>Perecível</mat-radio-button>
+            <mat-radio-button value="nao_perecivel" required>Não Perecível</mat-radio-button>
+        </mat-radio-group>
+    </form>
+    <button mat-raised-button (click)="createProduct()" color="primary" disabled="{{ isCreateDisabled() }}">
+        Criar
+    </button>
+    <button mat-raised-button (click)="cancel()">
+        Cancelar
+    </button>
+</mat-card>
