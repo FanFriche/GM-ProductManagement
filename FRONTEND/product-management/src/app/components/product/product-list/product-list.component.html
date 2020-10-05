@@ -1,4 +1,24 @@
 <div class="mat-elevation-z4 productsList">
+    <div class="filterDiv">
+      <form>
+        <mat-form-field floatLabel="always">
+            <input matInput placeholder="Nome" [(ngModel)]="product.name" [ngModelOptions]="{standalone: true}">
+        </mat-form-field>
+        <mat-label class="radioLabel">Categoria*</mat-label>
+        <mat-radio-group required [(ngModel)]="product.category" [ngModelOptions]="{standalone: true}">
+            <mat-radio-button value="perecivel">Perecível</mat-radio-button>
+            <mat-radio-button value="nao_perecivel">Não Perecível</mat-radio-button>
+        </mat-radio-group>
+      </form>
+      <div class="filterButtons">
+        <button mat-raised-button color="primary" (click)="readProductsByFilter()">
+          Filtrar
+        </button>
+        <button mat-raised-button (click)="readProducts()">
+          Limpar Filtros
+        </button>
+      </div>
+    </div>
     <table mat-table class="full-width-table" [dataSource]="products">
       <!-- Id Column -->
       <ng-container matColumnDef="id">

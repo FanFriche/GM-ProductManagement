@@ -1,7 +1,7 @@
 
 table {
     width: 100%;
-    padding: 0 20px 0px 20px;
+    padding: 0 20px 20px 20px;
 }
 
 .productsList{
@@ -18,4 +18,29 @@ table {
 
 .delete > i{
     color: #e35e6b
+}
+
+.radioLabel{
+    font-size: 0.7rem;
+    font-weight: 400;
+    color: rgba(0,0,0,.54);
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    margin: 30px 20px 0 20px;
+    padding: 20px 0 0 0; 
+}
+
+mat-radio-button{
+    margin: 5px 10px 0px 0px;
+}
+
+.filterButtons{
+    margin: 20px 20px 0px 20px;
+}
+
+.filterButtons > button{
+    margin: 0 10px 0 0;
 }

@@ -6,7 +6,7 @@
             <mat-error *ngIf="nameControl.invalid">{{getErrorMessage()}}</mat-error>
         </mat-form-field>
         <mat-form-field>
-            <input matInput placeholder="Preço (R$)" [(ngModel)]="product.value" [formControl]="valueControl" [disabled]="isDisabled">
+            <input matInput placeholder="Preço" [(ngModel)]="product.value" [formControl]="valueControl" [disabled]="isDisabled" type="number">
             <mat-error *ngIf="valueControl.invalid">{{getErrorMessage()}}</mat-error>
         </mat-form-field>
         <mat-label class="radioLabel">Categoria</mat-label>

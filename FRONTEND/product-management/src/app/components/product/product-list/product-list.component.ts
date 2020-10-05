@@ -13,6 +13,11 @@ import { CATEGORIES } from '../../../utils/constants';
 })
 export class ProductListComponent implements OnInit {
 
+  product: Product = {
+    name: '',
+    category: 'perecivel',
+    value: null
+  }
   products: Product[];
   displayedColumns = ['id', 'name', 'category', 'price', 'action']
 
@@ -39,7 +44,13 @@ export class ProductListComponent implements OnInit {
   readProducts(): void {
     this.productService.read().subscribe(products => {
       this.products = products
-    })
+    });
+  }
+
+  readProductsByFilter(): void {
+    this.productService.readByFilter(this.product).subscribe(products => {
+      this.products = products
+    });
   }
 
   getFormattedCategoryValue(category: string): string {

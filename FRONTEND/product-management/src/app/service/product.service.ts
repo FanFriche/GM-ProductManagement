@@ -54,6 +54,21 @@ export class ProductService{
     );
   }
 
+  readByFilter(product: Product):Observable<Product[]>{
+    let url = `${this.baseUrl}filter?nomeProduto=${product.name}&categoria=${product.category}`;
+
+    /*if(product.name !== '' && product.name !== null && product.name !== undefined){
+      url += `nomeProduto=${product.name}`;
+    } else if(product.category !== '' && product.category !== null && product.category !== undefined) {
+      url += `?categoria=${product.category}`;
+    }*/
+    console.log('ataaaaaaaaa', product)
+    return this.http.get<Product[]>(url).pipe(
+      map((obj) => obj),
+      catchError((e) => this.errorHandler(e))
+    );
+  }
+
   delete(product: Product):Observable<Product>{
     const url = `${this.baseUrl}/${product.id}`;
     return this.http.delete<Product>(url).pipe(
