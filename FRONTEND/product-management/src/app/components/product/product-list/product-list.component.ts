@@ -40,7 +40,15 @@ export class ProductListComponent implements OnInit {
       this.readProducts();
     })
   }
-
+  cleanFilter():void {
+    this.product = {
+      name: '',
+      category: 'perecivel',
+      value: null
+    };
+    
+    this.readProducts();
+  }
   readProducts(): void {
     this.productService.read().subscribe(products => {
       this.products = products
