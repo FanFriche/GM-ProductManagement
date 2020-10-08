@@ -2,11 +2,10 @@
     <mat-card-title>{{title}}</mat-card-title>
     <form>
         <mat-form-field>
-            <input matInput placeholder="Nome" [(ngModel)]="product.name" [formControl]="nameControl" [disabled]="true">
-            <mat-error *ngIf="nameControl.invalid">{{getErrorMessage()}}</mat-error>
+            <input matInput placeholder="Nome" [(ngModel)]="product.name" [formControl]="nameControl" >
         </mat-form-field>
         <mat-form-field>
-            <input matInput placeholder="Preço" [(ngModel)]="product.value" [formControl]="valueControl" [disabled]="isDisabled" type="number">
+            <input matInput placeholder="Preço" [(ngModel)]="product.value" [formControl]="valueControl" type="number">
             <mat-error *ngIf="valueControl.invalid">{{getErrorMessage()}}</mat-error>
         </mat-form-field>
         <mat-label class="radioLabel">Categoria</mat-label>

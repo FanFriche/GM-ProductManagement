@@ -14,8 +14,8 @@ export class ProductReadUpdateComponent implements OnInit {
   title: string = UPDATE_TITLE;
   product: Product;
   isDisabled: boolean = false;
-  nameControl = new FormControl('', [Validators.required]);
-  valueControl = new FormControl('', [Validators.required]);
+  nameControl: FormControl;
+  valueControl: FormControl;
 
   constructor(
     private productService: ProductService,
@@ -26,6 +26,9 @@ export class ProductReadUpdateComponent implements OnInit {
     const functionType = this.route.snapshot.paramMap.get('function').toUpperCase();
     this.changeScreenFields(functionType);
     this.getProductById();
+
+    this.nameControl = new FormControl({value: '', disabled: true}, [Validators.required]);
+    this.valueControl = new FormControl({value: '', disabled: this.isDisabled}, [Validators.required]);
   }
 
   updateProduct(): void {

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -38,9 +39,21 @@ public class ProductController {
 		return ResponseEntity.created(uri).body(productDtoResp);
 	}
 	
-	@GetMapping("/")
-	public ResponseEntity<List<ProductDTO>> getAllProducts() {
-		List<ProductDTO> products = productService.retrieveAll();
+	@GetMapping("/{page}/{size}")
+	public ResponseEntity<List<ProductDTO>> getAllProducts(@PathVariable("page") int page,
+            											   @PathVariable("size") int size) {
+		List<ProductDTO> products = productService.retrieveAll(page, size);
+		
+		if(products.size() > 0) {
+			return ResponseEntity.ok(products);
+		}
+		
+	    return ResponseEntity.noContent().build();
+	}
+	
+	@GetMapping("/filter")
+	public ResponseEntity<List<ProductDTO>> getAllProductsByFilter(@RequestParam(value="nomeProduto", required=false) String nomeProduto, @RequestParam(value="categoria",required=false) String categoria){
+		List<ProductDTO> products = productService.retrieveAllByFilter(nomeProduto, categoria);
 		
 		if(products.size() > 0) {
 			return ResponseEntity.ok(products);

@@ -1,11 +1,16 @@
 package com.grupomult.productmanagementapi.controllers.service;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.annotation.ManagedBean;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Order;
 
 import com.grupomult.productmanagementapi.controllers.dto.ProductDTO;
 import com.grupomult.productmanagementapi.controllers.dto.UpdateProductDTO;
@@ -25,18 +30,27 @@ public class ProductService {
 		return new ProductDTO(createdProduct);
 	}
 	
-	public List<ProductDTO> retrieveAll() {
-		List<Product> productsList = productRepository.findAll();
+	//TODO REMOVE
+    public List<Product> getPostsList(int page, int size) {
+        Pageable pageReq = PageRequest.of(page, size, Sort.by(Order.asc("name")));
+        
+        Page<Product> posts = productRepository.findAll(pageReq);
+        
+        return posts.getContent();
+    }
+	
+	public List<ProductDTO> retrieveAll(int page, int size) {
+        //Pageable pageable = PageRequest.of(page, size, Sort.by(Order.asc("name")));
+		Pageable pageable = PageRequest.of(page, size);
+        Page<Product> products = productRepository.findAll(pageable);
+        
+        return products.getContent().stream().map(this::convertToDto).collect(Collectors.toList());
+	}
+	
+	public List<ProductDTO> retrieveAllByFilter(String nomeProduto, String categoria) {
+		List<Product> products = productRepository.findByName(nomeProduto, categoria);
 		
-		List<ProductDTO> productsDtoList = new ArrayList<ProductDTO>();
-		
-		//TODO trocar para stream
-		for(Product product : productsList) {
-			ProductDTO productDto = new ProductDTO(product.getId(), product.getName(), product.getCategory(), product.getValue());
-			productsDtoList.add(productDto);
-		}
-		
-		return productsDtoList;
+		return products.stream().map(this::convertToDto).collect(Collectors.toList());
 	}
 	
 	public ProductDTO retrieveById(Integer id) {
@@ -57,4 +71,9 @@ public class ProductService {
 		
 		return new ProductDTO(product);
 	}
+	
+	private ProductDTO convertToDto(Product product) {
+		ProductDTO productDto = new ProductDTO(product);
+        return productDto;
+    }
 }
