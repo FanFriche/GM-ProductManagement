@@ -13,6 +13,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Order;
 
 import com.grupomult.productmanagementapi.controllers.dto.ProductDTO;
+import com.grupomult.productmanagementapi.controllers.dto.ProductMetadataDTO;
 import com.grupomult.productmanagementapi.controllers.dto.UpdateProductDTO;
 import com.grupomult.productmanagementapi.data.entity.Product;
 import com.grupomult.productmanagementapi.data.repository.ProductRepository;
@@ -45,6 +46,17 @@ public class ProductService {
         Page<Product> products = productRepository.findAll(pageable);
         
         return products.getContent().stream().map(this::convertToDto).collect(Collectors.toList());
+	}
+	
+	public ProductMetadataDTO getProductsPaginatorMetadata(int page, int size) {
+		Pageable pageable = PageRequest.of(page, size);
+		Page<Product> productsPaginadorMetadata = productRepository.findAll(pageable);
+		
+		ProductMetadataDTO productMetadataDTO = new ProductMetadataDTO();
+		productMetadataDTO.setTotalNumberOfPages(productsPaginadorMetadata.getTotalElements());
+		
+		return productMetadataDTO;
+		
 	}
 	
 	public List<ProductDTO> retrieveAllByFilter(String nomeProduto, String categoria) {

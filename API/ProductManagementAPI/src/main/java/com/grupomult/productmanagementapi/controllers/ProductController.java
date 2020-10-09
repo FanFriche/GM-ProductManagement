@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.grupomult.productmanagementapi.controllers.dto.ProductDTO;
+import com.grupomult.productmanagementapi.controllers.dto.ProductMetadataDTO;
 import com.grupomult.productmanagementapi.controllers.dto.UpdateProductDTO;
 import com.grupomult.productmanagementapi.controllers.service.ProductService;
 
@@ -49,6 +50,11 @@ public class ProductController {
 		}
 		
 	    return ResponseEntity.noContent().build();
+	}
+	
+	@GetMapping("/paginator")
+	public ResponseEntity<ProductMetadataDTO> getProductsPaginatorMetadata(){
+		return ResponseEntity.ok(productService.getProductsPaginatorMetadata(0, 10));
 	}
 	
 	@GetMapping("/filter")

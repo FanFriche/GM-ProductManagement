@@ -4,6 +4,7 @@ import { Product } from './../../../model/product.model';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { CATEGORIES } from '../../../utils/constants';
+import { PageEvent } from '@angular/material/paginator';
 
 
 @Component({
@@ -13,12 +14,31 @@ import { CATEGORIES } from '../../../utils/constants';
 })
 export class ProductListComponent implements OnInit {
 
+  length = 100;
+  pageSize = 5;
+  pageSizeOptions: number[] = [5, 10, 25, 100];
+
+  setPageSizeOptions(setPageSizeOptionsInput: string) {
+    console.log(setPageSizeOptionsInput);
+    if (setPageSizeOptionsInput) {
+      this.pageSizeOptions = setPageSizeOptionsInput.split(',').map(str => +str);
+    }
+  }
+  
+  onPageChange(pageEvent: PageEvent) {
+    console.log(this.pageSize);
+    this.readProductMetadata();
+    this.readProducts(pageEvent.pageIndex, pageEvent.pageSize);
+  }
+
   product: Product = {
     name: '',
     category: 'perecivel',
     value: null
   }
+
   products: Product[];
+
   displayedColumns = ['id', 'name', 'category', 'price', 'action']
 
   constructor(
@@ -27,7 +47,8 @@ export class ProductListComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.readProducts()
+    this.readProductMetadata();
+    this.readProducts(0, this.pageSize);
   }
 
   openDialog(id: string, name: string): void {
@@ -37,9 +58,11 @@ export class ProductListComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(() => {
-      this.readProducts();
+      this.readProductMetadata();
+      this.readProducts(0, this.pageSize);
     })
   }
+
   cleanFilter():void {
     this.product = {
       name: '',
@@ -47,11 +70,18 @@ export class ProductListComponent implements OnInit {
       value: null
     };
     
-    this.readProducts();
+    this.readProducts(0, this.pageSize);
   }
-  readProducts(): void {
-    this.productService.read().subscribe(products => {
+
+  readProducts(page:number, size:number): void {
+    this.productService.read(page, size).subscribe(products => {
       this.products = products
+    });
+  }
+
+  readProductMetadata(): void{
+    this.productService.readProductMetadata().subscribe(productMetadata => {
+      this.length = productMetadata.totalNumberOfPages;
     });
   }
 
@@ -67,5 +97,4 @@ export class ProductListComponent implements OnInit {
     }
     return CATEGORIES.FORMATTED.NOT_PERISHABLE
   }
-
 }

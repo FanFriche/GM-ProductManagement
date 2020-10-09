@@ -5,6 +5,8 @@ import { catchError, map } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { Product } from './../model/product.model';
+import { ProductMetadata } from './../model/product-metadata.model'
+import { ThrowStmt } from '@angular/compiler';
 
 @Injectable({
   providedIn: 'root'
@@ -39,8 +41,8 @@ export class ProductService{
     );
   }
 
-  read(): Observable<Product[]>{
-    const url = `${this.baseUrl}/0/30`
+  read(page:number, size:number): Observable<Product[]>{
+    const url = `${this.baseUrl}/${page}/${size}`
     return this.http.get<Product[]>(url).pipe(
       map((obj) => obj),
       catchError((e) => this.errorHandler(e))
@@ -50,6 +52,14 @@ export class ProductService{
   readById(id: string):Observable<Product>{
     const url = `${this.baseUrl}/${id}`;
     return this.http.get<Product>(url).pipe(
+      map((obj) => obj),
+      catchError((e) => this.errorHandler(e))
+    );
+  }
+
+  readProductMetadata():Observable<ProductMetadata>{
+    const url = `${this.baseUrl}/paginator`;
+    return this.http.get<ProductMetadata>(url).pipe(
       map((obj) => obj),
       catchError((e) => this.errorHandler(e))
     );
